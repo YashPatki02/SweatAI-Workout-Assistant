@@ -18,12 +18,11 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data)
   
   if (error) {
-      console.log(error)
-    redirect('/error')
+    return { success: false, error: error.message };
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/dashboard')
+  revalidatePath('/', 'layout');
+  return { success: true };
 }
 
 export async function signup(formData: FormData) {
@@ -39,15 +38,18 @@ export async function signup(formData: FormData) {
   console.log(data)
   if(data?.password  !== data?.confirmPassword ){
     console.log('password does not match')
-    redirect('/error')
+    return { success: false, error: 'password does not match' };
+    // redirect('/error')
   }
 
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
-    redirect('/error')
+    return { success: false, error: error.message };
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/dashboard')
+  revalidatePath('/', 'layout');
+  return { success: true };
+  // redirect('/dashboard')
+  // revalidatePath('/', 'layout')
 }

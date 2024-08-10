@@ -12,7 +12,8 @@ function Dashboard() {
     return redirect("/login");
   };
   const [user, setUser] = useState<Object | null>(null);
-  const [data, setData] = useState<any[]>([]); // Adjust type based on your actual data structure
+  // const [data, setData] = useState<any[]>([]) to get user histroy
+  const [loading, setLoading] = useState(true); // Added loading state
   const router = useRouter();
   const supabase = createClient();
 
@@ -24,18 +25,22 @@ function Dashboard() {
 
       if (!session) {
         // If not authenticated, redirect to login
-       redirect("/login");
+        router.push("/login");
       } else {
         console.log(session.user.email);
         setUser(session.user);
-
-        // Implement fetch data from the backend
+        // Fetch data from the backend
+        setLoading(false);
       }
     };
 
     checkUser();
   }, [router, supabase]);
 
+  // if not auth 
+  if (loading) {
+    return <p>Loading...</p>; // show loading page
+  }
   return (
     <div>
       <h1>Welcome to your Dashboard, {user?.email}</h1>
