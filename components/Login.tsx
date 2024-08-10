@@ -1,11 +1,12 @@
-import { useState } from "react";
+// import { useState } from "react";
 // import { useAuth } from "@/context/AuthContext";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import  {login} from '../app/login/actions'
 
 const Login = () => {
-    // const { login } = useAuth();
+    /* const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -24,17 +25,18 @@ const Login = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }; */
 
     return (
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form  className="space-y-4">
             <div className="space-y-1">
                 <Label htmlFor="email">Email</Label>
                 <Input
                     id="email"
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="email"
+                    // value={email}
+                    // onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
                     required
                 />
@@ -44,16 +46,18 @@ const Login = () => {
                 <Input
                     id="password"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    // value={password}
+                    // onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                     required
                 />
             </div>
-            {error && <p className="text-red-500">{error}</p>}
-            <Button type="submit" disabled={loading}>
+            {/* {error && <p className="text-red-500">{error}</p>} */}
+            {/* <Button type="submit" disabled={loading}>
                 {loading ? "Logging in..." : "Login"}
-            </Button>
+            </Button> */}
+            <button formAction={login}>Submit</button>
         </form>
     );
 };

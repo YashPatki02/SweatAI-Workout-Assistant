@@ -1,41 +1,43 @@
-import { useState } from "react";
+// import { useState } from "react";
 // import { useAuth } from "@/context/AuthContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { signup } from "@/app/login/actions";
 
 const Register = () => {
     // const { register } = useAuth();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [confirmPassword, setConfirmPassword] = useState("");
+    // const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState(null);
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError(null);
+    // const handleRegister = async (e) => {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     setError(null);
 
-        try {
-            await register(email, password);
-            console.log("Registered successfully!");
-        } catch (error) {
-            setError(error.message);
-            setLoading(false);
-            return;
-        }
-    };
+    //     try {
+    //         await register(email, password);
+    //         console.log("Registered successfully!");
+    //     } catch (error) {
+    //         setError(error.message);
+    //         setLoading(false);
+    //         return;
+    //     }
+    // };
 
     return (
-        <form onSubmit={handleRegister} className="space-y-4">
+        <form  className="space-y-4">
             <div className="space-y-1">
                 <Label htmlFor="email">Email</Label>
                 <Input
                     id="email"
                     type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="email"
+                    // value={email}
+                    // onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
                     required
                 />
@@ -45,8 +47,9 @@ const Register = () => {
                 <Input
                     id="password"
                     type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    // value={password}
+                    // onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                     required
                 />
@@ -56,16 +59,18 @@ const Register = () => {
                 <Input
                     id="confirm-password"
                     type="password"
-                    value={password}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    name="confirmPassword"
+                    // value={password}
+                    // onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm Password"
                     required
                 />
             </div>
-            {error && <p className="text-red-500">{error}</p>}
-            <Button type="submit" disabled={loading}>
+            {/* {error && <p className="text-red-500">{error}</p>} */}
+            {/* <Button type="submit" disabled={loading}>
                 {loading ? "Registering..." : "Register"}
-            </Button>
+            </Button> */}
+            <button formAction={signup}>Register</button>
         </form>
     );
 };
