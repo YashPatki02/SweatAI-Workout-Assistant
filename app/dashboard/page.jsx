@@ -1,8 +1,15 @@
+import { createClient } from '@/utils/supabase/server'
 import React from 'react'
 
-function Dashboard() {
-  
-  console.log
+async function Dashboard() {
+
+  const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log("user", user);
 
   return (
     <div>
