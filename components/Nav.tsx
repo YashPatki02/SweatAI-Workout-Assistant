@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 import { Activity } from "lucide-react";
+import Logout from "./Logout";
 
 const Nav = () => {
     return (
@@ -22,6 +23,7 @@ const Nav = () => {
                 <Link href="/login">
                     <Button className="text-md">Get Started</Button>
                 </Link>
+                <Logout />
             </nav>
         </header>
     );
