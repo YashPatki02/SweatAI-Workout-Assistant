@@ -36,7 +36,9 @@ export async function signup(formData: FormData) {
     password: formData.get('password') as string,
     confirmPassword: formData.get('confirmPassword') as string
   }
+  console.log(data)
   if(data?.password  !== data?.confirmPassword ){
+    console.log('password does not match')
     redirect('/error')
   }
 
