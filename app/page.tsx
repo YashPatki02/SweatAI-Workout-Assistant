@@ -1,9 +1,6 @@
-import DeployButton from "../components/DeployButton";
-import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
 import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CTA from "@/components/CTA";
 
@@ -20,6 +17,15 @@ export default async function Index() {
   };
 
   const isSupabaseConnected = canInitSupabaseClient();
+  console.log("isSupabaseConnected", isSupabaseConnected);
+
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log("user", user);
 
   return (
       // <div className="flex-1 w-full flex flex-col gap-20 items-center">

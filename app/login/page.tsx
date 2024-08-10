@@ -1,4 +1,3 @@
-"use client";
 import Register from "@/components/Register";
 import Login from "@/components/Login";
 import {
@@ -11,26 +10,8 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
-import Nav from "@/components/Nav";
 
 export default function LoginPage() {
-    // const { authUser, isLoading } = useAuth();
-
-    // useEffect(() => {
-    //     if (authUser) {
-    //         redirect("/");
-    //     }
-    // }, [authUser]);
-
-    // if (isLoading) {
-    //     return (
-    //         <div className="flex min-h-screen items-center justify-center">
-    //             Loading...
-    //         </div>
-    //     );
-    // }
-
     return (
         <main className="flex min-h-screen flex-col items-center p-4 mt-4">
             <div className="flex items-center justify-center min-h-auto mt-6 space-x-2">
