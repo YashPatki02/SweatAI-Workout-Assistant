@@ -6,6 +6,8 @@ import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CTA from "@/components/CTA";
+import NextLogo from "@/components/NextLogo";
+import SupabaseLogo from "@/components/SupabaseLogo";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {

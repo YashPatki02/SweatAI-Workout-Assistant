@@ -57,7 +57,7 @@ const Login = () => {
             {/* <Button type="submit" disabled={loading}>
                 {loading ? "Logging in..." : "Login"}
             </Button> */}
-            <button formAction={login}>Submit</button>
+            <Button formAction={login}>Submit</Button>
         </form>
     );
 };

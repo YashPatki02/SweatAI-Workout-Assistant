@@ -70,7 +70,7 @@ const Register = () => {
             {/* <Button type="submit" disabled={loading}>
                 {loading ? "Registering..." : "Register"}
             </Button> */}
-            <button formAction={signup}>Register</button>
+            <Button formAction={signup}>Register</Button>
         </form>
     );
 };
