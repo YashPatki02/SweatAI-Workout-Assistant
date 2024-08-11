@@ -20,7 +20,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
     const { setBotType } = props;
     const [isOpen, setIsOpen] = React.useState(true);
     const [selectedCoach, setSelectedCoach] = React.useState<string | null>(
-        null
+        '1'
     );
 
     const handleSelectCoach = (botType: string, index: string) => {
