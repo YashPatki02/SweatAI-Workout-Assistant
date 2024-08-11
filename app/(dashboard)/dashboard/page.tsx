@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { Sidebar } from "lucide-react";
+import ChatSidebar from "@/components/ChatSidebar";
 
 function Dashboard() {
     const [user, setUser] = useState<any>(null);
@@ -31,9 +33,12 @@ function Dashboard() {
     }
 
     return (
-        <div>
-            <h1>Welcome to your Dashboard, {user?.email}</h1>
-            <div>Render data here</div>
+        <div className="flex flex-row justify-between items-center">
+            <ChatSidebar />
+            <div>
+                <h1>Welcome to your Dashboard, {user?.email}</h1>
+                <div>Render data here</div>
+            </div>
         </div>
     );
 }
