@@ -9,26 +9,28 @@ import Chat from "@/components/Chat";
 
 function Dashboard() {
     const [user, setUser] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false); // Set back to true later
     const router = useRouter();
     const supabase = createClient();
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            setLoading(true);
-            const {
-                data: { user },
-            } = await supabase.auth.getUser();
-            setUser(user);
-            setLoading(false);
+    const [botType, setBotType] = useState("fitness");
 
-            if (!user) {
-                router.push("/login"); // Redirect to login if no user
-            }
-        };
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         setLoading(true);
+    //         const {
+    //             data: { user },
+    //         } = await supabase.auth.getUser();
+    //         setUser(user);
+    //         setLoading(false);
 
-        fetchUser();
-    }, [router, supabase]);
+    //         if (!user) {
+    //             router.push("/login"); // Redirect to login if no user
+    //         }
+    //     };
+
+    //     fetchUser();
+    // }, [router, supabase]);
 
     if (loading) {
         return <p>Loading...</p>; // Show loading page
@@ -36,10 +38,10 @@ function Dashboard() {
 
     return (
         <div className="flex flex-row justify-start items-start overflow-hidden">
-            <ChatSidebar />
+            <ChatSidebar setBotType={setBotType} />
             <div className="flex flex-col flex-1">
                 <ChatHeader />
-                <Chat />
+                <Chat botType={botType} />
             </div>
         </div>
     );

@@ -1,16 +1,26 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
+// Sets the system prompt for the appropriate bot type
+const generateSystemPrompt = (botType) => {
+    if (botType == "fitness") {
+        return "You are a personal trainer.";
+    } else if (botType == "nutrition") {
+        return "You are a personal nutritinist";
+    } else if (botType == "sports") {
+        return "You are a sports expert";
+    }
+};
+
 // POST function to handle incoming requests
 export async function POST(req) {
     const openai = new OpenAI(); // Create a new instance of the OpenAI client
     const data = await req.json(); // Parse the JSON body of the incoming request
-
-    const systemPrompt = "You are a personal trainer"; // Add system prompt from req data-- change line 13
+    const systemPrompt = generateSystemPrompt(data.botType); // Add system prompt from req data-- change line 13
 
     // Create a chat completion request to the OpenAI API
     const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: systemPrompt }, ...data], // Include the system prompt and user messages
+        messages: [{ role: "system", content: systemPrompt }, ...data.messages], // Include the system prompt and user messages
         model: "gpt-4o", // Specify the model to use
         stream: true, // Enable streaming responses
     });
