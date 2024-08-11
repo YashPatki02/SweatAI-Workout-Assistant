@@ -1,61 +1,139 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button"; // Adjust import path if needed
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { PanelRightClose, PanelRightOpen } from "lucide-react";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const ChatSidebar = () => {
-    return (
-        <aside className="w-64 bg-gray-800 text-white h-auto p-4">
-            <div className="grid grid-rows-5 gap-4 h-full">
-                <div className="row-span-1">
-                    <h1 className="text-2xl font-bold">SweatAI</h1>
+    const [isOpen, setIsOpen] = React.useState(true);
+    const [selectedCoach, setSelectedCoach] = React.useState<string | null>(
+        null
+    );
+
+    return isOpen ? (
+        <aside className="w-1/4 bg-[var(--sidebar)] h-screen">
+            <div className="flex flex-col gap-2 h-full justify-center px-4">
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <PanelRightOpen
+                                strokeWidth={2}
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="ml-4 mb-2 cursor-pointer"
+                            />
+                        </TooltipTrigger>
+                        <TooltipContent side="right">
+                            <p>Close Sidebar</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+
+                <div className="flex flex-col items-center justify-between ">
+                    <span className="font-bold uppercase text-primary text-md text-center">
+                        Meet your Coaches
+                    </span>
                 </div>
 
-                {/* Image Row 1 */}
-                <div className="row-span-1">
-                    <Image
-                        src="/hero.png"
-                        alt="Image 1"
-                        width={256}
-                        height={144}
-                        className="w-full h-full object-cover rounded-lg"
-                    />
+                {/* Coach Row 1 */}
+                <div className="px-4">
+                    <Card
+                        className={`cursor-pointer hover:shadow-lg transition-shadow ${
+                            selectedCoach === "1" ? "border-blue-400" : ""
+                        }`}
+                        onClick={() => setSelectedCoach("1")}
+                    >
+                        <CardHeader className="flex flex-row items-center justify-center gap-4">
+                            <Avatar>
+                                <AvatarImage
+                                    src="https://github.com/shadcn.png"
+                                    alt="@shadcn"
+                                />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <p className="text-muted-foreground text-sm">
+                                Chad, Fitness Coach to personalize your workout
+                                plans and training.
+                            </p>
+                        </CardHeader>
+                    </Card>
                 </div>
 
-                {/* Image Row 2 */}
-                <div className="row-span-1">
-                    <Image
-                        src="/hero.png"
-                        alt="Image 2"
-                        width={256}
-                        height={144}
-                        className="w-full h-full object-cover rounded-lg"
-                    />
+                {/* Coach Row 2 */}
+                <div className="px-4">
+                    <Card
+                        className={`cursor-pointer hover:shadow-lg transition-shadow ${
+                            selectedCoach === "2" ? "border-blue-400" : ""
+                        }`}
+                        onClick={() => setSelectedCoach("2")}
+                    >
+                        <CardHeader className="flex flex-row items-center justify-center gap-4">
+                            <Avatar>
+                                <AvatarImage
+                                    src="https://github.com/shadcn.png"
+                                    alt="@shadcn"
+                                />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <p className="text-muted-foreground text-sm">
+                                Cherry, Nutrition Coach to personalize your
+                                nutrition plans and diet.
+                            </p>
+                        </CardHeader>
+                    </Card>
                 </div>
 
-                {/* Image Row 3 */}
-                <div className="row-span-1">
-                    <Image
-                        src="/hero.png"
-                        alt="Image 3"
-                        width={256}
-                        height={144}
-                        className="w-full h-full object-cover rounded-lg"
-                    />
-                </div>
-
-                {/* Buttons Row */}
-                <div className="row-span-1 flex flex-col justify-between">
-                    <div className="flex flex-col gap-2">
-                        <Button className="bg-blue-500 hover:bg-blue-600">
-                            Update Profile
-                        </Button>
-                        <Button className="bg-red-500 hover:bg-red-600">
-                            Logout
-                        </Button>
-                    </div>
+                {/* Coach Row 3 */}
+                <div className="px-4">
+                    <Card
+                        className={`cursor-pointer hover:shadow-lg transition-shadow ${
+                            selectedCoach === "3" ? "border-blue-400" : ""
+                        }`}
+                        onClick={() => setSelectedCoach("3")}
+                    >
+                        <CardHeader className="flex flex-row items-center juce gap-4">
+                            <Avatar>
+                                <AvatarImage
+                                    src="https://github.com/shadcn.png"
+                                    alt="@shadcn"
+                                />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <p className="text-muted-foreground text-sm">
+                                Brian, Knowledge Coach to provide you advice,
+                                tips, and facts on all things sports.
+                            </p>
+                        </CardHeader>
+                    </Card>
                 </div>
             </div>
-        </aside>
+        </aside>)
+        : (
+            <div className="flex flex-col items-center justify-center gap-4">
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <PanelRightClose
+                                strokeWidth={2}
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="cursor-pointer"
+                            />
+                        </TooltipTrigger>
+                        <TooltipContent side="right">
+                            <p>Open Sidebar</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+                <span className="font-bold uppercase text-primary text-md text-center">
+                    Meet your Coaches
+                </span>
+            </div>
     );
 };
 
