@@ -9,11 +9,14 @@ import Features from "@/components/Features";
 
 const Hero = () => {
     const goToFeatures = () => {
-        document.getElementById("features").scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-            inline: "nearest"
-        });
+        const features = document.getElementById("features");
+        if (features) {
+            features.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+                inline: "nearest",
+            });
+        }
     };
 
     return (
@@ -35,16 +38,19 @@ const Hero = () => {
                         Learn More
                     </Button>
                     <Button size="lg">
-                        <Link href="/register">Get Started</Link>
+                        <Link href="/login">Get Started</Link>
                     </Button>
                 </div>
                 <div className="relative sm:mt-8 mb-4 shadow-lg">
                     <Image
                         className=" rounded-xl"
                         src="/hero.png"
-                        width={1000}
-                        height={698}
+                        alt="Hero Image"
                         fill={false}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{ width: "1000px", height: "auto" }}
                     />
                 </div>
             </section>

@@ -2,8 +2,16 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
 import { Activity } from "lucide-react";
+import Logout from "./Logout";
+import { createClient } from "@/utils/supabase/server";
 
-const Nav = () => {
+const Nav = async () => {
+    const supabase = createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
     return (
         <header className="flex flex-row w-full items-center justify-between px-16 py-4 shadow-md">
             <Link href="/" className="flex flex-row gap-2 items-center">
@@ -19,9 +27,13 @@ const Nav = () => {
                 <Link href="/dashboard">About</Link>
                 <Link href="/dashboard">Team</Link>
 
-                <Link href="/login">
-                    <Button className="text-md">Get Started</Button>
-                </Link>
+                {user === null ? (
+                    <Link href="/login">
+                        <Button className="text-md">Get Started</Button>
+                    </Link>
+                ) : (
+                    <Logout />
+                )}
             </nav>
         </header>
     );

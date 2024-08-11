@@ -1,13 +1,36 @@
-import DeployButton from "../components/DeployButton";
-import AuthButton from "../components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
 import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CTA from "@/components/CTA";
 
 export default async function Index() {
+    const canInitSupabaseClient = () => {
+        // This function is just for the interactive tutorial.
+        // Feel free to remove it once you have Supabase connected.
+        try {
+            createClient();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    };
+
+    const isSupabaseConnected = canInitSupabaseClient();
+    console.log("isSupabaseConnected", isSupabaseConnected);
+
+    const supabase = createClient();
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    // const {
+    //   data: { session },
+    // } = await supabase.auth.getSession();
+
+    console.log("user", user);
+
     return (
         // <div className="flex-1 w-full flex flex-col gap-20 items-center">
         //   <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">

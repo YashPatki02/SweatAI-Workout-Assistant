@@ -1,4 +1,4 @@
-"use client";
+import { createClient } from "@/utils/supabase/server";
 import Register from "@/components/Register";
 import Login from "@/components/Login";
 import {
@@ -11,25 +11,17 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
-import Nav from "@/components/Nav";
 
-export default function LoginPage() {
-    // const { authUser, isLoading } = useAuth();
+export default async function LoginPage() {
+    const supabase = createClient();
 
-    // useEffect(() => {
-    //     if (authUser) {
-    //         redirect("/");
-    //     }
-    // }, [authUser]);
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
 
-    // if (isLoading) {
-    //     return (
-    //         <div className="flex min-h-screen items-center justify-center">
-    //             Loading...
-    //         </div>
-    //     );
-    // }
+    if (user) {
+        redirect("/dashboard"); // Server-side redirect if user is authenticated
+    }
 
     return (
         <main className="flex min-h-screen flex-col items-center p-4 mt-4">

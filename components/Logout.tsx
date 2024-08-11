@@ -1,23 +1,13 @@
-// import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
+import { signOut } from "@/utils/actions/signout";
 
 const Logout = () => {
-    // const { signOut } = useAuth();
-
-    const handleLogout = async () => {
-        try {
-            await signOut();
-            console.log("Logged out successfully!");
-        } catch (error) {
-            alert(error.message);
-            return;
-        }
-    };
-
     return (
-        <Button variant="secondary" onClick={handleLogout}>
-            Logout
-        </Button>
+        <form action={signOut} method="POST">
+            <Button className="text-md" variant="secondary" type="submit">
+                Logout
+            </Button>
+        </form>
     );
 };
 
