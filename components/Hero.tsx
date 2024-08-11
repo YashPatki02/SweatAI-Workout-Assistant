@@ -38,7 +38,7 @@ const Hero = () => {
                         Learn More
                     </Button>
                     <Button size="lg">
-                        <Link href="/register">Get Started</Link>
+                        <Link href="/login">Get Started</Link>
                     </Button>
                 </div>
                 <div className="relative sm:mt-8 mb-4 shadow-lg">

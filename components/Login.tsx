@@ -5,7 +5,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { login } from "../app/login/actions";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const Login = () => {
   /* const { login } = useAuth();
@@ -31,7 +31,6 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
   const handleSubmit = async (formData: FormData) => {
     setError(null); // Reset error state
 
@@ -43,7 +42,7 @@ const Login = () => {
     } else {
       // Redirect to dashboard on successful login
       console.log("successfully logged in ");
-      router.push("/dashboard");
+      redirect("/dashboard");
     }
   };
   return (
