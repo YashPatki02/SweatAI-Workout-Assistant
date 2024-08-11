@@ -20,7 +20,7 @@ export default async function LoginPage() {
     } = await supabase.auth.getUser();
 
     if (user) {
-        redirect("/dashboard"); // Server-side redirect if user is authenticated
+        redirect("/dashboard");
     }
 
     return (
