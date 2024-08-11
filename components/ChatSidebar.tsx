@@ -12,11 +12,21 @@ import {
 } from "@/components/ui/tooltip";
 import { Separator } from "./ui/separator";
 
-const ChatSidebar = () => {
+type ChatSidebarProps = {
+    setBotType: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const ChatSidebar = (props: ChatSidebarProps) => {
+    const { setBotType } = props;
     const [isOpen, setIsOpen] = React.useState(true);
     const [selectedCoach, setSelectedCoach] = React.useState<string | null>(
-        null
+        '1'
     );
+
+    const handleSelectCoach = (botType: string, index: string) => {
+        setBotType(botType);
+        setSelectedCoach(index);
+    };
 
     return isOpen ? (
         <aside className="w-3/4 z-10 fixed bg-[var(--sidebar)] h-screen sm:relative sm:w-1/4">
@@ -50,7 +60,7 @@ const ChatSidebar = () => {
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "1" ? "border-blue-400" : ""
                         }`}
-                        onClick={() => setSelectedCoach("1")}
+                        onClick={() => handleSelectCoach("fitness", "1")}
                     >
                         <CardHeader className="flex flex-row items-center justify-center gap-4">
                             <Avatar>
@@ -74,7 +84,7 @@ const ChatSidebar = () => {
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "2" ? "border-blue-400" : ""
                         }`}
-                        onClick={() => setSelectedCoach("2")}
+                        onClick={() => handleSelectCoach("nutrition", "2")}
                     >
                         <CardHeader className="flex flex-row items-center justify-center gap-4">
                             <Avatar>
@@ -98,7 +108,7 @@ const ChatSidebar = () => {
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "3" ? "border-blue-400" : ""
                         }`}
-                        onClick={() => setSelectedCoach("3")}
+                        onClick={() => handleSelectCoach("sports", "3")}
                     >
                         <CardHeader className="flex flex-row items-center justify-center gap-4">
                             <Avatar>
