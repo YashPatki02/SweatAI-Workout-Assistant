@@ -10,6 +10,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Separator } from "./ui/separator";
 
 const ChatSidebar = () => {
     const [isOpen, setIsOpen] = React.useState(true);
@@ -18,8 +19,8 @@ const ChatSidebar = () => {
     );
 
     return isOpen ? (
-        <aside className="w-1/4 bg-[var(--sidebar)] h-screen">
-            <div className="flex flex-col gap-2 h-full justify-center px-4">
+        <aside className="w-3/4 z-10 fixed bg-[var(--sidebar)] h-screen sm:relative sm:w-1/4">
+            <div className="flex flex-col gap-2 h-full justify-start mt-4 px-4">
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
@@ -35,14 +36,16 @@ const ChatSidebar = () => {
                     </Tooltip>
                 </TooltipProvider>
 
-                <div className="flex flex-col items-center justify-between ">
+                <Separator orientation="horizontal" />
+
+                <div className="flex flex-col items-center justify-between mt-2">
                     <span className="font-bold uppercase text-primary text-md text-center">
                         Meet your Coaches
                     </span>
                 </div>
 
                 {/* Coach Row 1 */}
-                <div className="px-4">
+                <div className="px-3">
                     <Card
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "1" ? "border-blue-400" : ""
@@ -66,7 +69,7 @@ const ChatSidebar = () => {
                 </div>
 
                 {/* Coach Row 2 */}
-                <div className="px-4">
+                <div className="px-3">
                     <Card
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "2" ? "border-blue-400" : ""
@@ -90,14 +93,14 @@ const ChatSidebar = () => {
                 </div>
 
                 {/* Coach Row 3 */}
-                <div className="px-4">
+                <div className="px-3">
                     <Card
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "3" ? "border-blue-400" : ""
                         }`}
                         onClick={() => setSelectedCoach("3")}
                     >
-                        <CardHeader className="flex flex-row items-center juce gap-4">
+                        <CardHeader className="flex flex-row items-center justify-center gap-4">
                             <Avatar>
                                 <AvatarImage
                                     src="https://github.com/shadcn.png"
@@ -113,27 +116,76 @@ const ChatSidebar = () => {
                     </Card>
                 </div>
             </div>
-        </aside>)
-        : (
-            <div className="flex flex-col items-center justify-center gap-4">
+        </aside>
+    ) : (
+        <aside className="w-20 bg-[var(--sidebar)] h-screen">
+            <div className="flex flex-col gap-2 h-full justify-start mt-4 px-4">
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <PanelRightClose
                                 strokeWidth={2}
                                 onClick={() => setIsOpen(!isOpen)}
-                                className="cursor-pointer"
+                                className="ml-4 mb-2 cursor-pointer"
                             />
                         </TooltipTrigger>
                         <TooltipContent side="right">
-                            <p>Open Sidebar</p>
+                            <p>Close Sidebar</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
-                <span className="font-bold uppercase text-primary text-md text-center">
-                    Meet your Coaches
-                </span>
+
+                <Separator orientation="horizontal" />
+
+                {/* Coach Row 1 */}
+                <div className="px-4 mt-12 flex flex-col items-center justify-center gap-12">
+                    <Avatar
+                        className={`cursor-pointer hover:shadow-lg transition-shadow ${
+                            selectedCoach === "1"
+                                ? "ring-2 ring-blue-400 ring-offset-1"
+                                : ""
+                        }`}
+                        onClick={() => setSelectedCoach("1")}
+                    >
+                        <AvatarImage
+                            src="https://github.com/shadcn.png"
+                            alt="@shadcn"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+
+                    <Avatar
+                        className={`cursor-pointer hover:shadow-lg transition-shadow ${
+                            selectedCoach === "2"
+                                ? "ring-2 ring-blue-400 ring-offset-1"
+                                : ""
+                        }`}
+                        onClick={() => setSelectedCoach("2")}
+                    >
+                        <AvatarImage
+                            src="https:///github.com/shadcn.png"
+                            alt="@shadcn"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+
+                    <Avatar
+                        className={`cursor-pointer hover:shadow-lg transition-shadow ${
+                            selectedCoach === "3"
+                                ? "ring-2 ring-blue-400 ring-offset-1"
+                                : ""
+                        }`}
+                        onClick={() => setSelectedCoach("3")}
+                    >
+                        <AvatarImage
+                            src="https:///github.com/shadcn.png"
+                            alt="@shadcn"
+                        />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                </div>
             </div>
+        </aside>
     );
 };
 
