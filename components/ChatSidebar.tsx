@@ -29,8 +29,8 @@ const ChatSidebar = (props: ChatSidebarProps) => {
     };
 
     return isOpen ? (
-        <aside className="w-3/4 z-10 fixed bg-[var(--sidebar)] h-screen sm:relative sm:w-1/4">
-            <div className="flex flex-col gap-2 h-full justify-start mt-4 px-4">
+        <aside className="w-3/4 z-10 fixed bg-[var(--sidebar)] h-screen md:relative md:w-1/2 lg:relative lg:w-1/4">
+            <div className="flex flex-col gap-2 h-full justify-start mt-6 px-4">
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
@@ -55,14 +55,14 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                 </div>
 
                 {/* Coach Row 1 */}
-                <div className="px-3">
+                <div className="px-1">
                     <Card
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "1" ? "border-blue-400" : ""
                         }`}
                         onClick={() => handleSelectCoach("fitness", "1")}
                     >
-                        <CardHeader className="flex flex-row items-center justify-center gap-4">
+                        <CardHeader className="flex flex-row items-center justify-start gap-4">
                             <Avatar>
                                 <AvatarImage
                                     src="https://github.com/shadcn.png"
@@ -71,22 +71,21 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                             <p className="text-muted-foreground text-sm">
-                                Chad, Fitness Coach to personalize your workout
-                                plans and training.
+                                Chad, Fitness Coach - Workout, Exercise
                             </p>
                         </CardHeader>
                     </Card>
                 </div>
 
                 {/* Coach Row 2 */}
-                <div className="px-3">
+                <div className="px-1">
                     <Card
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "2" ? "border-blue-400" : ""
                         }`}
                         onClick={() => handleSelectCoach("nutrition", "2")}
                     >
-                        <CardHeader className="flex flex-row items-center justify-center gap-4">
+                        <CardHeader className="flex flex-row items-center justify-start gap-4">
                             <Avatar>
                                 <AvatarImage
                                     src="https://github.com/shadcn.png"
@@ -95,22 +94,21 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                             <p className="text-muted-foreground text-sm">
-                                Cherry, Nutrition Coach to personalize your
-                                nutrition plans and diet.
+                                Cherry, Nutrition Coach - Diet and Food
                             </p>
                         </CardHeader>
                     </Card>
                 </div>
 
                 {/* Coach Row 3 */}
-                <div className="px-3">
+                <div className="px-1">
                     <Card
                         className={`cursor-pointer hover:shadow-lg transition-shadow ${
                             selectedCoach === "3" ? "border-blue-400" : ""
                         }`}
                         onClick={() => handleSelectCoach("sports", "3")}
                     >
-                        <CardHeader className="flex flex-row items-center justify-center gap-4">
+                        <CardHeader className="flex flex-row items-center justify-start gap-4">
                             <Avatar>
                                 <AvatarImage
                                     src="https://github.com/shadcn.png"
@@ -119,8 +117,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                             <p className="text-muted-foreground text-sm">
-                                Brian, Knowledge Coach to provide you advice,
-                                tips, and facts on all things sports.
+                                Brian, Sports Coach - Rules, Techniques, Facts
                             </p>
                         </CardHeader>
                     </Card>
@@ -129,7 +126,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
         </aside>
     ) : (
         <aside className="w-20 bg-[var(--sidebar)] h-screen">
-            <div className="flex flex-col gap-2 h-full justify-start mt-4 px-4">
+            <div className="flex flex-col gap-2 h-full justify-start mt-6 px-4">
                 <TooltipProvider>
                     <Tooltip>
                         <TooltipTrigger asChild>
@@ -140,7 +137,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                             />
                         </TooltipTrigger>
                         <TooltipContent side="right">
-                            <p>Close Sidebar</p>
+                            <p>Open Sidebar</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
