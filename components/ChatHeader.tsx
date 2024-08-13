@@ -15,18 +15,32 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
-const ChatHeader = () => {
+interface ChatHeaderProps {
+    botType: 'fitness' | 'nutrition' | 'sports';
+}
+
+const ChatHeader = ({ botType }: ChatHeaderProps) => {
     return (
         <div className="flex flex-row items-center justify-between p-4 px-6 w-full border-border bg-[var(--chat)]">
-            <div className="flex flex-row gap-2 items-center justify-center">
-                <Activity
-                    size={20}
-                    strokeWidth={3}
-                    className="font-bold text-primary"
-                />
-                <h1 className="text-2xl font-bold">SweatAI</h1>
-            </div>
+            <Link href="/">
+                <div className="flex flex-row gap-2 items-center justify-center">
+                    <Activity
+                        size={20}
+                        strokeWidth={3}
+                        className="font-bold text-primary"
+                    />
+                    <h1 className="text-2xl font-bold">SweatAI</h1>
+                </div>
+            </Link>
+            <h3 className="text-md text-center text-muted-foreground">
+                {botType === "fitness"
+                    ? "Fitness"
+                    : botType === "nutrition"
+                    ? "Nutrition"
+                    : "Sports"}
+            </h3>
             <DropdownMenu>
                 <DropdownMenuTrigger>
                     <Avatar>

@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 
 type ChatProps = {
-    botType: string;
+    botType: "fitness" | "nutrition" | "sports";
 };
 
 const Chat = (props: ChatProps) => {
@@ -79,7 +79,13 @@ const Chat = (props: ChatProps) => {
 
     return (
         <div className="relative flex flex-col flex-1 p-4 px-6">
-            <h1 className="text-xl font-semibold mb-4">Chat</h1>
+            <h1 className="text-xl font-semibold mb-4">
+                {botType === "fitness"
+                    ? "Chat with Chad"
+                    : botType === "nutrition"
+                    ? "Chat with Cherry"
+                    : "Chat with Brian"}
+            </h1>
 
             {/* Main content area */}
             <ScrollArea className="h-[70vh] mb-4">

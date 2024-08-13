@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/tooltip";
 import { Separator } from "./ui/separator";
 
+type BotType = "fitness" | "nutrition" | "sports";
+
 type ChatSidebarProps = {
-    setBotType: React.Dispatch<React.SetStateAction<string>>;
+    setBotType: React.Dispatch<React.SetStateAction<BotType>>;
 };
 
 const ChatSidebar = (props: ChatSidebarProps) => {
@@ -23,7 +25,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
         '1'
     );
 
-    const handleSelectCoach = (botType: string, index: string) => {
+    const handleSelectCoach = (botType: BotType, index: string) => {
         setBotType(botType);
         setSelectedCoach(index);
     };
