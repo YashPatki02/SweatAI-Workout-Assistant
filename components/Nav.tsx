@@ -63,7 +63,15 @@ const Nav = async () => {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <Logout />
+                            {user === null ? (
+                                <Link href="/login">
+                                    <Button className="text-md">
+                                        Get Started
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <Logout />
+                            )}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
