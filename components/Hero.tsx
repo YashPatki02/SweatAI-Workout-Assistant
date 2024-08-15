@@ -51,6 +51,7 @@ const Hero = () => {
                         height={0}
                         sizes="100vw"
                         style={{ width: "1000px", height: "auto" }}
+                        priority={true}
                     />
                 </div>
             </section>

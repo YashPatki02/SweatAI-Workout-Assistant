@@ -154,7 +154,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                                 ? "ring-2 ring-blue-400 ring-offset-1"
                                 : ""
                         }`}
-                        onClick={() => setSelectedCoach("1")}
+                        onClick={() => handleSelectCoach("fitness", "1")}
                     >
                         <AvatarImage
                             src="https://github.com/shadcn.png"
@@ -169,7 +169,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                                 ? "ring-2 ring-blue-400 ring-offset-1"
                                 : ""
                         }`}
-                        onClick={() => setSelectedCoach("2")}
+                        onClick={() => handleSelectCoach("nutrition", "2")}
                     >
                         <AvatarImage
                             src="https:///github.com/shadcn.png"
@@ -184,7 +184,7 @@ const ChatSidebar = (props: ChatSidebarProps) => {
                                 ? "ring-2 ring-blue-400 ring-offset-1"
                                 : ""
                         }`}
-                        onClick={() => setSelectedCoach("3")}
+                        onClick={() => handleSelectCoach("sports", "3")}
                     >
                         <AvatarImage
                             src="https:///github.com/shadcn.png"

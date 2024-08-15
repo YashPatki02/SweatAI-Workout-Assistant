@@ -16,12 +16,26 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 interface ChatHeaderProps {
-    botType: 'fitness' | 'nutrition' | 'sports';
+    botType: "fitness" | "nutrition" | "sports";
 }
 
 const ChatHeader = ({ botType }: ChatHeaderProps) => {
+    const supabase = createClient();
+    const router = useRouter();
+    
+    const signOut = async () => {
+        try {
+            await supabase.auth.signOut();
+            router.push("/");
+        } catch (error) {
+            console.error("Error signing out:", error);
+        }
+    }
+
     return (
         <div className="flex flex-row items-center justify-between p-4 px-6 w-full border-border bg-[var(--chat)]">
             <Link href="/">
@@ -63,7 +77,7 @@ const ChatHeader = ({ botType }: ChatHeaderProps) => {
                     <DropdownMenuItem>Billing</DropdownMenuItem>
                     <DropdownMenuItem>Team</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={signOut}>
                         <LucideLogOut size={15} className="mr-2" /> Logout
                     </DropdownMenuItem>
                 </DropdownMenuContent>

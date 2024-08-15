@@ -1,110 +1,211 @@
 import { Input } from "@/components/ui/input";
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
+import { createClient } from "@/utils/supabase/client";
+import ChatMessages from "./ChatMessages";
+import { LoaderCircle } from "lucide-react";
+import { redirect, useRouter } from "next/navigation";
 
 type ChatProps = {
     botType: "fitness" | "nutrition" | "sports";
 };
 
+interface Message {
+    content: string;
+    role: "assistant" | "user";
+}
+
 const Chat = (props: ChatProps) => {
+    const sendButton = useRef<HTMLButtonElement>(null);
+    const router = useRouter();
+
     const { botType } = props;
+    const supabase = createClient();
 
-    const [message, setMessage] = React.useState("");
-    const [messages, setMessages] = React.useState([
-        {
-            role: "assistant",
-            content:
-                "Hi, I'm your personal AI assistant. How can I help you today?",
-        },
-    ]);
+    const [message, setMessage] = React.useState<Message>({
+        role: "user",
+        content: "",
+    });
+    const [messages, setMessages] = React.useState<{
+        fitness: Message[];
+        nutrition: Message[];
+        sports: Message[];
+    }>({
+        fitness: [],
+        nutrition: [],
+        sports: [],
+    });
+    const [loading, setLoading] = React.useState(true);
 
-    const handleOnChangeText = (e: React.FormEvent<HTMLInputElement>) => {
-        setMessage(e.currentTarget.value);
-    };
-
-    const handleSendMessage = async () => {
-        setMessage("");
-        setMessages((messages) => [
-            ...messages,
-            { role: "user", content: message }, // Add the user's message to the chat
-            { role: "assistant", content: "" }, // Add a placeholder for the assistant's response
-        ]);
-
-        // Send the message to the server
-        const response = fetch("/api/chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                botType: botType,
-                messages: [...messages, { role: "user", content: message }],
-            }),
-        }).then(async (res: Response) => {
-            const reader = res.body?.getReader(); // Get a reader to read the response body
-            const decoder = new TextDecoder(); // Create a decoder to decode the response text
-
-            let result = "";
-            // Function to process the text from the response
-            const processText = async ({
-                done,
-                value,
-            }: ReadableStreamReadResult<Uint8Array>): Promise<
-                string | undefined
-            > => {
-                if (done) {
-                    return result;
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch(`/api/messages`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                const text = decoder.decode(value, {
-                    stream: true,
-                }); // Decode the text
+                const data = await response.json();
 
-                setMessages((messages) => {
-                    let lastMessage = messages[messages.length - 1];
-                    let otherMessages = messages.slice(0, messages.length - 1);
-                    return [
-                        ...otherMessages,
-                        { ...lastMessage, content: lastMessage.content + text },
-                    ];
-                });
+                setMessages(data);
+            } catch (error) {
+                console.error("Error fetching messages:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-                result += text;
-                return reader?.read().then(processText); // Continue reading the next chunk of the response
-            };
+        fetchData();
+    }, []);
 
-            await reader?.read().then(processText);
+    const handleOnChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage({
+            role: "user",
+            content: e.currentTarget.value,
         });
     };
 
+    const handleSendMessage = async () => {
+        const updatedMessages = {
+            ...messages,
+            [botType]: [...messages[botType], message],
+        };
+
+        setMessages(updatedMessages);
+
+        setMessage({ role: "user", content: "" });
+
+        try {
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    botType: botType,
+                    messages: updatedMessages[botType],
+                }),
+            }).then(async (res: Response) => {
+                const reader = res.body?.getReader();
+                const decoder = new TextDecoder();
+
+                let result = "";
+
+                const processText = async ({
+                    done,
+                    value,
+                }: ReadableStreamReadResult<Uint8Array>): Promise<
+                    string | undefined
+                > => {
+                    if (done) {
+                        return result;
+                    }
+                    const text = decoder.decode(value, {
+                        stream: true,
+                    });
+
+                    setMessages((messages) => {
+                        let lastMessage =
+                            messages[botType][messages[botType].length - 1];
+                        let otherMessages = messages[botType].slice(
+                            0,
+                            messages[botType].length - 1
+                        );
+
+                        if (lastMessage.role === "user") {
+                            return {
+                                ...messages,
+                                [botType]: [
+                                    ...otherMessages,
+                                    lastMessage,
+                                    {
+                                        role: "assistant",
+                                        content: text,
+                                    },
+                                ],
+                            };
+                        } else {
+                            return {
+                                ...messages,
+                                [botType]: [
+                                    ...otherMessages,
+                                    {
+                                        ...lastMessage,
+                                        content: lastMessage.content + text,
+                                    },
+                                ],
+                            };
+                        }
+                    });
+
+                    result += text;
+                    return reader?.read().then(processText); // Continue reading the next chunk of the response
+                };
+
+                await reader?.read().then(processText);
+            });
+        } catch (error) {
+            console.error("Error sending message:", error);
+        }
+    };
+    // Handle Enter key press to send the message
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            if (message.content.trim().length > 0) {
+                sendButton.current?.click();
+            }
+        }
+    };
+
+    // const endChat = async () => {
+    //     try {
+    //         const response = await fetch("/api/messages", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //                 botType: botType,
+    //             }),
+    //         });
+    //         if (response.ok) {
+    //         } else {
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+    //     } catch (error) {
+    //         console.error("Error ending chat:", error);
+    //     }
+    // };
+
     return (
         <div className="relative flex flex-col flex-1 p-4 px-6">
-            <h1 className="text-xl font-semibold mb-4">
-                {botType === "fitness"
-                    ? "Chat with Chad"
-                    : botType === "nutrition"
-                    ? "Chat with Cherry"
-                    : "Chat with Brian"}
-            </h1>
+            <div className="flex flex-row gap-2 items-center justify-between mb-4">
+                <h1 className="text-xl font-semibold ">
+                    {botType === "fitness"
+                        ? "Chat with Chad"
+                        : botType === "nutrition"
+                        ? "Chat with Cherry"
+                        : "Chat with Brian"}
+                </h1>
+                {/* <Button variant="destructive" onClick={endChat}>
+                    End Chat
+                </Button> */}
+            </div>
 
             {/* Main content area */}
-            <ScrollArea className="h-[70vh] mb-4">
-                <div className="flex flex-col gap-2">
-                    {messages.map((message, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={`max-w-2xl rounded-lg p-4 m-2 break-words overflow-wrap break-word ${
-                                    message.role === "assistant"
-                                        ? "bg-primary text-white self-start"
-                                        : "bg-slate-200 text-gray-800 self-end"
-                                }`}
-                            >
-                                <p>{message.content}</p>
-                            </div>
-                        );
-                    })}
-                </div>
+            <ScrollArea className="h-[70vh] mb-4 px-2">
+                {loading ? (
+                    <div className="flex justify-center items-center h-1/2">
+                        <LoaderCircle
+                            size={36}
+                            className="text-primary animate-spin"
+                        />
+                    </div>
+                ) : (
+                    <ChatMessages messages={messages[botType]} />
+                )}
             </ScrollArea>
 
             {/* Input area */}
@@ -113,9 +214,12 @@ const Chat = (props: ChatProps) => {
                     onChange={handleOnChangeText}
                     placeholder="Search"
                     className="flex-1"
-                    value={message}
+                    value={message.content}
+                    onKeyDown={handleKeyDown}
                 />
-                <Button onClick={handleSendMessage}>Send</Button>
+                <Button ref={sendButton} onClick={handleSendMessage}>
+                    Send
+                </Button>
             </div>
         </div>
     );

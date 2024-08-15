@@ -18,11 +18,6 @@ function Dashboard() {
     const [botType, setBotType] = useState<BotType>("fitness");
 
     useEffect(() => {
-        console.log("bot changed to", botType);
-        // if bot changes the message changes get from backend
-    }, [botType]);
-
-    useEffect(() => {
         const fetchUser = async () => {
             const {
                 data: { user },
