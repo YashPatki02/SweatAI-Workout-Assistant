@@ -9,15 +9,17 @@ SweatAI is deployed on Vercel. You can view the live app here: [SweatAI](https:/
 ## Features
 
 - **Multi-Bot System**: Three distinct chatbots for fitness, nutrition, and sports. Each bot provides specialized advice and directs queries outside their expertise to other bots.
-- **Generative AI**: Utilizes [OpenAI GPT-4](https://openai.com/research/gpt-4) for high-quality chat responses.
+- **Generative AI**: Utilizes [OpenAI GPT-4](https://openai.com/research/gpt-4) for high-quality chat responses, prompt engineered to learn more about your needs and tailor personalized responses.
 - **User Authentication**: Secure login with [Supabase](https://supabase.com/) for managing user sessions and storing chat histories.
 - **Intuitive UI**: Built with [Next.js](https://nextjs.org/), [TailwindCSS](https://tailwindcss.com/), and Shadcn for a smooth and responsive user experience.
 
 ## Screenshots
 
-<img src="https://github.com/YashPatki02/SweatAI-Workout-Assistant/blob/main/screenshots/chatbots.png" alt="Chatbots in Action" width="600" height="auto" />
+<img src="https://github.com/YashPatki02/SweatAI-Workout-Assistant/blob/main/screenshots/landing.png" alt="Landing Page" width="600" height="auto" />
+<img src="https://github.com/YashPatki02/SweatAI-Workout-Assistant/blob/main/screenshots/features.png" alt="Features" width="600" height="auto" />
+<img src="https://github.com/YashPatki02/SweatAI-Workout-Assistant/blob/main/screenshots/login.png" alt="Login Page" width="600" height="auto" />
 <img src="https://github.com/YashPatki02/SweatAI-Workout-Assistant/blob/main/screenshots/dashboard.png" alt="Dashboard" width="600" height="auto" />
-<img src="https://github.com/YashPatki02/SweatAI-Workout-Assistant/blob/main/screenshots/landing-page.png" alt="Landing Page" width="600" height="auto" />
+<img src="https://github.com/YashPatki02/SweatAI-Workout-Assistant/blob/main/screenshots/sidebar.png" alt="Sidebar" width="600" height="auto" />
 
 ## Getting Started
 
